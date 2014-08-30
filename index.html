@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Extrawork : ExtraWork.dll template for PvPGN">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Extrawork</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/xboi209/ExtraWork">View on GitHub</a>
+
+          <h1 id="project_title">Extrawork</h1>
+          <h2 id="project_tagline">ExtraWork.dll template for PvPGN</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/xboi209/ExtraWork/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/xboi209/ExtraWork/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a name="extrawork" class="anchor" href="#extrawork"><span class="octicon octicon-link"></span></a>ExtraWork</h3>
+
+<p>ExtraWork is used to send DLL files to Battle.net clients for execution.
+There are two types of ExtraWork: <a href="https://bnetdocs.org/?op=packet&amp;pid=182">SID_REQUIREDWORK</a> and <a href="https://bnetdocs.org/?op=packet&amp;pid=102">SID_OPTIONALWORK</a>.
+Blizzard has generally used this module to run hack detection/prevention code or collect system data for future use. It is not regularly used and Battle.net servers no longer uses this module.</p>
+
+<h3>
+<a name="sid_requiredwork" class="anchor" href="#sid_requiredwork"><span class="octicon octicon-link"></span></a>SID_REQUIREDWORK</h3>
+
+<p>The server sends packet <a href="https://bnetdocs.org/?op=packet&amp;pid=182">0x4C</a> to the client containing the MPQ's filename, often named <strong>IX86ExtraWork.mpq</strong>, to download. In response, the client will send packet <a href="https://bnetdocs.org/?op=packet&amp;pid=382">0x33</a> to the server with Request ID <strong>0x80000006</strong> for the filetime of the filename previously received.
+The client will check <strong>bncache.dat</strong> on the user's computer for the same file and download a new copy from the server via <a href="https://bnetdocs.org/?op=doc&amp;did=5">BNFTP</a> if the file does not exist or the filetime does not match.
+Inside the MPQ file, there is a DLL file with the same filename but the file extension is <em>.dll</em>. The client will extract the DLL file and call an exported function called <em>ExtraWork</em>.</p>
+
+<h3>
+<a name="sid_optionalwork" class="anchor" href="#sid_optionalwork"><span class="octicon octicon-link"></span></a>SID_OPTIONALWORK</h3>
+
+<p><em>SID_OPTIONALWORK</em> behaves similarly to SID_REQUIREDWORK with the exception that downloading the MPQ file from the server is completely optional and the Request ID is <strong>0x80000005</strong>.
+To toggle whether or not the client should download the MPQ file, the registry key <strong>HKEY_CURRENT_USER\Software\Battle.net\Optimize\SysDesc</strong>(REG_DWORD) must be modified. A value of 0 will make the client <em>not</em> download the specified MPQ file and vice versa with any non-zero value.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Extrawork maintained by <a href="https://github.com/xboi209">xboi209</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
