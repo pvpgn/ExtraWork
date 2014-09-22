@@ -7,10 +7,12 @@ void sexp();
 void w3xp();
 void d2xp();
 
-extern "C"
+struct EXTRAWORK
 {
-	__declspec(dllexport) bool __cdecl ExtraWork(void *_params);
-}
+	WORD GameType;
+	WORD Length;
+	char OutBuffer[4096];
+} extrawork;
 
 struct data
 {
@@ -19,6 +21,11 @@ struct data
 	HWND hWnd;
 	char classname[256];
 } game;
+
+extern "C"
+{
+	__declspec(dllexport) BOOL __cdecl ExtraWork(EXTRAWORK inStruct);
+}
 
 const char *classNames[] =
 {

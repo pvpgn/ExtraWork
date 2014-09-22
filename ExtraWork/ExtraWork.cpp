@@ -22,15 +22,14 @@
 #include <TlHelp32.h>
 #include "ExtraWork.h"
 
-bool __cdecl ExtraWork(void *_params);
+BOOL __cdecl ExtraWork(EXTRAWORK inStruct);
 void sexp();
 void w3xp();
 void d2xp();
 BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam);
 
-bool __cdecl ExtraWork(void *_params)
+BOOL __cdecl ExtraWork(EXTRAWORK inStruct)
 {
-	//struct EXTRAWORK *params = (struct EXTRAWORK *)_params;
 	game.pid = GetCurrentProcessId();
 	game.handle = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_DUP_HANDLE | PROCESS_QUERY_INFORMATION | PROCESS_SET_INFORMATION | PROCESS_SUSPEND_RESUME | PROCESS_TERMINATE | PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE, FALSE, game.pid);
 	EnumWindows((WNDENUMPROC)enumWindowsProc, NULL);
@@ -44,9 +43,9 @@ bool __cdecl ExtraWork(void *_params)
 	else if (strcmp(game.classname, D2XP) == 0)
 		d2xp();
 	else
-		return false;
+		return FALSE;
 
-	return true;
+	return TRUE;
 }
 
 
@@ -81,10 +80,10 @@ BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
 			if (strcmp(classNames[i], className) == 0)
 			{
 				game.hWnd = hWnd;
-				return false;
+				return FALSE;
 			}
 		}
 	}
 
-	return true;
+	return TRUE;
 }
