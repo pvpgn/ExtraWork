@@ -40,7 +40,7 @@ enum GameType
 };
 
 //Example:	Client IX86ExtraWork.dll 0x3 4
-//			Program DLL Gametype Length
+//		Program DLL Gametype Length
 int main(int argc, char ** argv)
 {
 	HINSTANCE		hLib;
@@ -50,6 +50,7 @@ int main(int argc, char ** argv)
 
 	if (argc == 1)
 	{
+		//Default values if no arguments are passed
 		argv[1] = "IX86ExtraWork.dll";
 		argv[2] = "0x3";
 		argv[3] = "4";
