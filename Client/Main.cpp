@@ -19,25 +19,9 @@
 #include <Windows.h>
 #include <iostream>
 #include <cstdlib>
+#include "Main.h"
 
 using namespace std;
-
-struct EXTRAWORK
-{
-	WORD GameType;
-	WORD Length;
-	char OutBuffer[1024];
-};
-
-typedef BOOL(__fastcall *ExtraWorkProc)(void *);
-
-enum GameType
-{
-	Diablo2 = 0x1,
-	Warcraft3 = 0x2,
-	Starcraft = 0x3,
-	WorldOfWarcraft = 0x4
-};
 
 //Example:	Client IX86ExtraWork.dll 0x3 4
 //		Program DLL Gametype Length
@@ -45,7 +29,7 @@ int main(int argc, char ** argv)
 {
 	HINSTANCE		hLib;
 	ExtraWorkProc	lpfnExtraWork;
-	BOOL			bReturn;
+	BOOL			bReturn = NULL;
 	EXTRAWORK		ew;
 
 	if (argc == 1)
@@ -62,32 +46,28 @@ int main(int argc, char ** argv)
 	}
 
 
-	hLib = LoadLibrary(argv[1]);
-
-	bool success = false;
-	if (hLib)
+	if (hLib = LoadLibrary(argv[1]))
 	{
-		lpfnExtraWork = (ExtraWorkProc)GetProcAddress(hLib, "ExtraWork");
-		ew.GameType = (WORD)strtoul(argv[2], NULL, 16);
-		ew.Length = atoi(argv[3]);
-		*ew.OutBuffer = 0;
-
-		if (lpfnExtraWork)
+		if (lpfnExtraWork = (ExtraWorkProc)GetProcAddress(hLib, "ExtraWork"))
 		{
+			ew.GameType = (WORD)strtoul(argv[2], NULL, 16);
+			ew.Length = atoi(argv[3]);
+			*ew.OutBuffer = 0;
+
 			bReturn = (*lpfnExtraWork)(&ew);
 
 			cout << "ExtraWork returned " << (bReturn ? "TRUE" : "FALSE") << endl;
-			cout << "GameType: " << ew.GameType << "\t\t" << "Length: " << ew.Length << endl << endl;
+			cout << "GameType: " << ew.GameType << "\t\t" << "Length: " << ew.Length << endl;
 			cout << "Message: " << ew.OutBuffer << endl;
-
-			success = true;
 		}
+
 		FreeLibrary(hLib);
 	}
 
-
-	if (!success)
+	if (!bReturn)
+	{
 		cout << "Could not load " << argv[1] << endl;
+	}
 
 
 	return 0;
