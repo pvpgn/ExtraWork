@@ -31,29 +31,33 @@ int main(int argc, char ** argv)
 	ExtraWorkProc	lpfnExtraWork;
 	BOOL			bReturn = NULL;
 	EXTRAWORK		ew;
+	char			*dllname;
 
-	if (argc == 1)
-	{
-		//Default values if no arguments are passed
-		argv[1] = "IX86ExtraWork.dll";
-		argv[2] = "0x3";
-		argv[3] = "4";
-	}
-	else if (argc != 1 && argc != 4)
+
+	if (argc != 1 && argc != 4)
 	{
 		cout << "Invalid number of arguments" << endl;
 		return 0;
 	}
+	else if (argc == 1)	//Default values if no arguments are passed
+	{
+		dllname = "IX86ExtraWork.dll";
+		ew.GameType = 0x3;
+		ew.Length = 4;
+	}
+	else //4 arguments
+	{
+		dllname = argv[1];
+		ew.GameType = (WORD)strtoul(argv[2], NULL, 16);
+		ew.Length = atoi(argv[3]);
+	}
+	*ew.OutBuffer = 0;
 
 
-	if (hLib = LoadLibrary(argv[1]))
+	if (hLib = LoadLibrary(dllname))
 	{
 		if (lpfnExtraWork = (ExtraWorkProc)GetProcAddress(hLib, "ExtraWork"))
 		{
-			ew.GameType = (WORD)strtoul(argv[2], NULL, 16);
-			ew.Length = atoi(argv[3]);
-			*ew.OutBuffer = 0;
-
 			bReturn = (*lpfnExtraWork)(&ew);
 
 			cout << "ExtraWork returned " << (bReturn ? "TRUE" : "FALSE") << endl;
@@ -66,7 +70,7 @@ int main(int argc, char ** argv)
 
 	if (!bReturn)
 	{
-		cout << "Could not load " << argv[1] << endl;
+		cout << "Could not load " << dllname << endl;
 	}
 
 
