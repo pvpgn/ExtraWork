@@ -28,9 +28,10 @@ int main(int argc, char ** argv)
 {
 	HINSTANCE		hLib;
 	ExtraWorkProc	lpfnExtraWork;
-	BOOL			bReturn = NULL;
+	BOOL			bReturn;
 	EXTRAWORK		ew;
 	char			*dllname;
+	bool			success = false;
 
 
 	if (argc != 1 && argc != 4)
@@ -63,12 +64,14 @@ int main(int argc, char ** argv)
 			cout << "ExtraWork returned " << (bReturn ? "TRUE" : "FALSE") << endl;
 			cout << "GameType: " << ew.GameType << "\t\t" << "Length: " << ew.Length << endl;
 			cout << "Message: " << ew.OutBuffer << endl;
+
+			success = true;
 		}
 
 		FreeLibrary(hLib);
 	}
 
-	if (!bReturn)
+	if (success == false)
 		cout << "Could not load " << dllname << endl;
 
 
