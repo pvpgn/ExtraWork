@@ -18,7 +18,6 @@
 
 #include <Windows.h>
 #include <iostream>
-#include <cstdlib>
 #include "Main.h"
 
 using namespace std;
@@ -42,24 +41,25 @@ int main(int argc, char ** argv)
 	else if (argc == 1)	//Default values if no arguments are passed
 	{
 		dllname = "IX86ExtraWork.dll";
-		ew.GameType = 0x3;
+		ew.GameType = 0x3; //StarCraft
 		ew.Length = 4;
 	}
-	else //4 arguments
+	else //3 arguments
 	{
 		dllname = argv[1];
 		ew.GameType = (WORD)strtoul(argv[2], NULL, 16);
 		ew.Length = atoi(argv[3]);
 	}
-	*ew.OutBuffer = 0;
+	strcpy_s(ew.OutBuffer, sizeof(ew.OutBuffer), "\0");
 
 
 	if (hLib = LoadLibrary(dllname))
 	{
 		if (lpfnExtraWork = (ExtraWorkProc)GetProcAddress(hLib, "ExtraWork"))
 		{
-			bReturn = (*lpfnExtraWork)(&ew);
+			bReturn = (*lpfnExtraWork)(&ew, 0);
 
+			//FIXME: GameType should remain constant, Length needs to be determined by the Client and not the DLL
 			cout << "ExtraWork returned " << (bReturn ? "TRUE" : "FALSE") << endl;
 			cout << "GameType: " << ew.GameType << "\t\t" << "Length: " << ew.Length << endl;
 			cout << "Message: " << ew.OutBuffer << endl;
@@ -69,9 +69,7 @@ int main(int argc, char ** argv)
 	}
 
 	if (!bReturn)
-	{
 		cout << "Could not load " << dllname << endl;
-	}
 
 
 	return 0;

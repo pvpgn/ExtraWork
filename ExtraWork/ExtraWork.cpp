@@ -22,14 +22,14 @@
 #include <TlHelp32.h>
 #include "ExtraWork.h"
 
-BOOL __cdecl ExtraWork(EXTRAWORK inStruct);
-void sexp();
-void w3xp();
-void d2xp();
-BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam);
 
-BOOL __cdecl ExtraWork(EXTRAWORK inStruct)
+BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused)
 {
+	if (inStruct)
+		strcpy_s(inStruct->OutBuffer, sizeof(inStruct->OutBuffer), "IX86ExtraWork v1.0 by xboi209");
+	else
+		return FALSE;
+
 	game.pid = GetCurrentProcessId();
 	game.handle = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_DUP_HANDLE | PROCESS_QUERY_INFORMATION | PROCESS_SET_INFORMATION | PROCESS_SUSPEND_RESUME | PROCESS_TERMINATE | PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE, FALSE, game.pid);
 	EnumWindows((WNDENUMPROC)enumWindowsProc, NULL);

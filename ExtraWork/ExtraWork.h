@@ -29,8 +29,8 @@ struct EXTRAWORK
 {
 	WORD GameType;
 	WORD Length;
-	char OutBuffer[4096];
-} extrawork;
+	char OutBuffer[1024];
+};
 
 struct data
 {
@@ -40,16 +40,18 @@ struct data
 	char classname[256];
 } game;
 
-extern "C"
-{
-	__declspec(dllexport) BOOL __cdecl ExtraWork(EXTRAWORK inStruct);
-}
+
+BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused);
+void sexp();
+void w3xp();
+void d2xp();
+BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam);
 
 const char *classNames[] =
 {
-	"SWarClass",
-	"Warcraft III",
-	"Diablo II"
+	SEXP,
+	W3XP,
+	D2XP
 };
 
 const int classNameElementSize = sizeof(classNames) / sizeof(classNames[0]);
