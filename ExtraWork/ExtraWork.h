@@ -46,7 +46,7 @@ void sexp();
 void w3xp();
 void d2xp();
 BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam);
-
+ 
 const char *classNames[] =
 {
 	SEXP,
