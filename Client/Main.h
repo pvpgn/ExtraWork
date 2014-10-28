@@ -23,4 +23,4 @@ struct EXTRAWORK
 	char OutBuffer[1024];
 };
 
-typedef BOOL(__fastcall *ExtraWorkProc)(EXTRAWORK *inStruct, int unused);
+typedef BOOL(__thiscall *ExtraWorkProc)(EXTRAWORK *inStruct);
