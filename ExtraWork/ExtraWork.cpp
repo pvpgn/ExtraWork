@@ -23,7 +23,7 @@
 #include "ExtraWork.h"
 
 
-BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused)
+BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int /*unused*/ )
 {
 	if (inStruct)
 		strcpy_s(inStruct->OutBuffer, sizeof(inStruct->OutBuffer), "IX86ExtraWork v1.0 by xboi209");
@@ -64,7 +64,7 @@ void d2xp()
 	return;
 }
 
-BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam)
+BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM /*lParam*/)
 {
 	DWORD tempPID;
 	char className[256];

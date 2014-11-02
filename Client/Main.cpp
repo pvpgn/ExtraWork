@@ -53,12 +53,13 @@ int main(int argc, char ** argv)
 	}
 	strcpy_s(ew.OutBuffer, sizeof(ew.OutBuffer), "\0");
 
-
-	if (hLib = LoadLibrary(dllname))
+	hLib = LoadLibrary(dllname);/*avoid warning*/
+	if (hLib) 
 	{
-		if (lpfnExtraWork = (ExtraWorkProc)GetProcAddress(hLib, "ExtraWork"))
+		lpfnExtraWork = (ExtraWorkProc)GetProcAddress(hLib, "ExtraWork");/*avoid warning*/
+		if (lpfnExtraWork)
 		{
-			bReturn = (*lpfnExtraWork)(&ew, 0);
+			bReturn = (*lpfnExtraWork)(&ew);
 
 			//FIXME: GameType should remain constant, Length needs to be determined by the Client and not the DLL
 			cout << "ExtraWork returned " << (bReturn ? "TRUE" : "FALSE") << endl;
