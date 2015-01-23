@@ -41,7 +41,7 @@ struct data
 } game;
 
 
-BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused);
+__declspec(dllexport) BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused);
 void sexp();
 void w3xp();
 void d2xp();
