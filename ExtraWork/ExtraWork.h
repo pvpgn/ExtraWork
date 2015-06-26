@@ -1,57 +1,34 @@
 /*
-*	ExtraWork - Allows PvPGN clients to load this DLL and executes code for specific clients
-*	Copyright (C) 2014  xboi209 (xboi209@gmail.com)
-*
-*	This program is free software: you can redistribute it and/or modify
-*	it under the terms of the GNU General Public License as published by
-*	the Free Software Foundation, either version 3 of the License, or
-*	(at your option) any later version.
-*
-*	This program is distributed in the hope that it will be useful,
-*	but WITHOUT ANY WARRANTY; without even the implied warranty of
-*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*	GNU General Public License for more details.
-*
-*	You should have received a copy of the GNU General Public License
-*	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*	See UNLICENSE file for license details
+*	Refer to <http://unlicense.org/> if you have not received a copy of UNLICENSE
 */
+#if _WIN32 || _WIN64
+	#if _WIN64
+		#error "64-bit DLLs can not be used in 32-bit programs"
+	#endif
+#endif
 
-//INVESTIGATE: Do expansions have the same class name?
-#define SEXP "SWarClass"
-#define W3XP "Warcraft III"
-#define D2XP "Diablo II"
+#define EXPORT extern "C" __declspec(dllexport)
 
-void sexp();
-void w3xp();
-void d2xp();
+//Remove the need for Windows.h
+typedef	int		BOOL;
+#define	TRUE	1
+#define	FALSE	0
 
-struct EXTRAWORK
+#include <cstdint>
+
+struct EXTRAWORK //refer to https://bnetdocs.org/?op=packet&pid=240
 {
-	WORD GameType;
-	WORD Length;
-	char OutBuffer[1024];
+	uint16_t Game;
+	/*
+	*	0x01: Diablo II
+	*	0x02: Warcraft III
+	*	0x03: StarCraft
+	*	0x04: World of Warcraft
+	*/
+
+	uint16_t Length;
+	char Buffer[1024];
 };
 
-struct data
-{
-	DWORD pid;
-	HANDLE handle;
-	HWND hWnd;
-	char classname[256];
-} game;
-
-
-__declspec(dllexport) BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused);
-void sexp();
-void w3xp();
-void d2xp();
-BOOL CALLBACK enumWindowsProc(HWND hWnd, LPARAM lParam);
- 
-const char *classNames[] =
-{
-	SEXP,
-	W3XP,
-	D2XP
-};
-
-const int classNameElementSize = sizeof(classNames) / sizeof(classNames[0]);
+EXPORT BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused);
