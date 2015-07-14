@@ -12,8 +12,12 @@
 
 //Remove the need for Windows.h
 typedef	int		BOOL;
-#define	TRUE	1
-#define	FALSE	0
+#ifndef TRUE
+	#define	TRUE	1
+#endif
+#ifndef FALSE
+	#define	FALSE	0
+#endif
 
 #include <cstdint>
 
@@ -31,4 +35,4 @@ struct EXTRAWORK //refer to https://bnetdocs.org/?op=packet&pid=240
 	char Buffer[1024];
 };
 
-EXPORT BOOL __fastcall ExtraWork(EXTRAWORK *inStruct, int unused);
+EXPORT BOOL __fastcall ExtraWork(EXTRAWORK *ExtraWork, int unused);
