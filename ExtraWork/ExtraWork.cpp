@@ -4,12 +4,12 @@
 */
 #include "ExtraWork.h"
 
-EXPORT BOOL __fastcall ExtraWork(EXTRAWORK *ExtraWork, int)
+EXPORT BOOL __fastcall ExtraWork(ExtraWorkData *extrawork, int)
 {
-	if (ExtraWork == nullptr)
+	if (extrawork == nullptr)
 		return FALSE;
 
-	switch (ExtraWork->Game)
+	switch (extrawork->game)
 	{
 	case 0x01:
 	case 0x02:
