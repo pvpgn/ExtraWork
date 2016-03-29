@@ -1,10 +1,13 @@
 /*
-*	See UNLICENSE file for license details
+*	This is free and unencumbered software released into the public domain.
 *	Refer to <http://unlicense.org/> if you have not received a copy of UNLICENSE
 */
-#include "ExtraWork.h"
+#include "extrawork.h"
 
-EXPORT BOOL __fastcall ExtraWork(ExtraWorkData *extrawork, int)
+#include <cstring>
+
+
+BOOL __fastcall ExtraWork(ExtraWorkData *extrawork, int)
 {
 	if (extrawork == nullptr)
 		return FALSE;
@@ -19,6 +22,8 @@ EXPORT BOOL __fastcall ExtraWork(ExtraWorkData *extrawork, int)
 	default:
 		return FALSE;
 	}
+
+	extrawork->length = static_cast<std::uint16_t>(std::strlen(extrawork->buffer));
 
 	return TRUE;
 }
