@@ -8,8 +8,8 @@ Pre-compiled binaries are available on the [Releases](https://github.com/xboi209
 
 Compiling
 =========
-A C++11 compliant compiler with WinAPI available should be able to compile this project.
+A C++11 compliant compiler with WinAPI and an implementation of the draft File System Technical Specification (ISO/IEC JTC 1/SC 22/WG 21 N4100) available should be able to compile this project.
 
 License
 =========
-ExtraWork is released under public domain as specified by [UNLICENSE](http://unlicense.org/).
+ExtraWork is free and unencumbered software released into the public domain as specified by [UNLICENSE](http://unlicense.org/).
